@@ -133,7 +133,6 @@ ${mouth}${lk.front}
 
   /* ---------- sound ---------- */
   let actx = null;
-  const Sound = { on: true };
   function tone(freq, start, dur, type, vol) {
     const o = actx.createOscillator(), g = actx.createGain();
     o.type = type || 'sine'; o.frequency.value = freq;
@@ -144,7 +143,6 @@ ${mouth}${lk.front}
     o.start(actx.currentTime + start); o.stop(actx.currentTime + start + dur + 0.05);
   }
   function play(kind) {
-    if (!Sound.on) return;
     try {
       actx = actx || new (root.AudioContext || root.webkitAudioContext)();
       if (actx.state === 'suspended') actx.resume();
@@ -156,5 +154,5 @@ ${mouth}${lk.front}
     } catch (e) { /* audio unavailable */ }
   }
 
-  MP.FX = { pip, confetti, play, Sound, mix, LOOKS };
+  MP.FX = { pip, confetti, play, mix, LOOKS };
 })(typeof window !== 'undefined' ? window : globalThis);

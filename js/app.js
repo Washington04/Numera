@@ -46,10 +46,8 @@
     if (p.harderTrust == null) p.harderTrust = 1;
     delete p.targetP; delete p.lenMode; delete p.len;
   }
-  A.data.settings = A.data.settings || { sound: true };
   if (!A.data.seededDemo) { A.data.profiles.push(MP.Sim.demoProfile(Date.now())); A.data.seededDemo = true; }
   A.data.profiles.forEach(migrate);
-  FX.Sound.on = A.data.settings.sound !== false;
   Store.save(A.data);
 
   const profile = () => A.data.profiles.find((p) => p.id === A.pid);
@@ -79,9 +77,6 @@
       h('span', { class: 'brand-mark', 'aria-hidden': 'true' }, raw(FX.pip({ color: '#4DABF7', mood: 'idle', size: 34 }))),
       h('span', null, 'Num', h('b', null, 'era')),
       h('span', { class: 'beta-tag' }, 'Beta'));
-  }
-  function soundBtn() {
-    return h('button', { class: 'iconbtn', 'aria-label': FX.Sound.on ? 'Turn sound off' : 'Turn sound on', title: 'Sound', onclick: () => { FX.Sound.on = !FX.Sound.on; A.data.settings.sound = FX.Sound.on; save(); render(); if (FX.Sound.on) FX.play('tap'); } }, FX.Sound.on ? '🔊' : '🔇');
   }
   function topbar(...right) { return h('header', { class: 'top' }, brand(), h('div', { class: 'row tight' }, ...right)); }
 
@@ -133,8 +128,8 @@
   function screenProfiles() {
     const ps = A.data.profiles;
     return h('div', { class: 'wrap stack' },
-      topbar(soundBtn()),
-      h('div', { class: 'hero-title' }, h('h1', null, 'Choose your profile'), h('p', { class: 'muted' }, 'Each player keeps their own level, path and progress on this device.'), h('p', { class: 'muted small' }, '🔒 No accounts, no uploads. Nothing here ever leaves this device.')),
+      topbar(),
+      h('div', { class: 'hero-title' }, h('h1', null, 'Choose your profile'), h('p', { class: 'muted' }, 'Each player keeps their own level, path, and progress.'), h('p', { class: 'muted small' }, '🔒 No accounts, no uploads. Nothing here ever leaves this device.')),
       h('div', { class: 'players' },
         ps.map((p) => {
           const L = E.levelInfo(p.xp), last = p.sessions[p.sessions.length - 1];
@@ -248,7 +243,7 @@
     const mins = Math.max(2, Math.round(p.qCount * cur.t * (p.speed || 1) * 1.5 / 60));
     if (!p.placed) {
       return h('div', { class: 'wrap stack' },
-        topbar(soundBtn(), h('button', { class: 'btn ghost', onclick: () => { A.pid = null; go('profiles'); } }, 'Switch')),
+        topbar(h('button', { class: 'btn ghost', onclick: () => { A.pid = null; go('profiles'); } }, 'Switch')),
         h('div', { class: 'glass pad hero' },
           h('div', { class: 'hero-pip' }, pipEl(p, 'cheer', 170, 'bob'), h('div', { class: 'bubble' }, `Hi ${firstName(p)}! I’m Pip.`)),
           h('div', { class: 'stack' },
@@ -258,7 +253,7 @@
     }
     const last = p.sessions[p.sessions.length - 1];
     return h('div', { class: 'wrap stack' },
-      topbar(soundBtn(), h('button', { class: 'btn ghost', onclick: () => go('dash') }, 'Grown-ups'), h('button', { class: 'btn ghost', onclick: () => { A.pid = null; go('profiles'); } }, 'Switch')),
+      topbar(h('button', { class: 'btn ghost', onclick: () => go('dash') }, 'Grown-ups'), h('button', { class: 'btn ghost', onclick: () => { A.pid = null; go('profiles'); } }, 'Switch')),
       h('div', { class: 'glass pad hero' },
         h('div', { class: 'hero-pip' }, pipEl(p, 'idle', 150, 'bob'), h('div', { class: 'bubble' }, pickFresh('greet', GREET))),
         h('div', { class: 'stack hero-main' },
@@ -559,7 +554,7 @@
     const p = profile(), cur = currentSkill(p);
     setTimeout(showLevelUp, 900);
     return h('div', { class: 'wrap stack' },
-      topbar(soundBtn()),
+      topbar(),
       h('div', { class: 'glass pad hero celebrate' },
         h('div', { class: 'hero-pip' }, h('div', { class: 'burst', 'aria-hidden': 'true' }), pipEl(p, 'cheer', 170, 'jump')),
         h('div', { class: 'stack' },
@@ -577,7 +572,7 @@
     const n = run.answers.length, c = run.answers.filter((a) => a.correct).length;
     const story = E.narrative({ answers: run.answers, mode: run.mode, completed: true });
     return h('div', { class: 'wrap stack' },
-      topbar(soundBtn()),
+      topbar(),
       h('div', { class: 'glass pad hero celebrate' },
         h('div', { class: 'hero-pip' }, h('div', { class: 'burst', 'aria-hidden': 'true' }), pipEl(p, 'cheer', 160, 'jump')),
         h('div', { class: 'stack' },
@@ -770,7 +765,6 @@
           h('h3', null, 'Settings'),
           segCtl('Default mode', Object.entries(E.MODES).map(([k, m]) => [k, m.label]), p.mode, (v) => { p.mode = v; save(); render(); }),
           segCtl('Questions per session', [[5, '5'], [10, '10'], [15, '15'], [20, '20']], p.qCount, (v) => { p.qCount = Number(v); save(); render(); }),
-          segCtl('Sound', [[true, 'On'], [false, 'Off']], FX.Sound.on, (v) => { FX.Sound.on = v === true || v === 'true'; A.data.settings.sound = FX.Sound.on; save(); render(); }),
           h('div', { class: 'row' },
             h('button', { class: 'btn', onclick: () => { p.placed = false; save(); go('home'); } }, 'Redo check-in'),
             h('button', { class: 'btn', onclick: () => exportData(p) }, 'Export data')),

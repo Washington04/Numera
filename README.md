@@ -28,7 +28,7 @@ After editing source files, run `node build.mjs` to rebuild `dist/Numera.html`, 
 | **Make it harder 🔥** after a right answer (weighted by how fast and unaided it was) |  Each player's targets and how far their own signals have nudged them |
 | Labels like "You got this!", "Stretch: tricky on purpose", "Turning it up! 🔥" and a 5-bar difficulty meter | Frustration and boredom signals, plus every adjustment the app made, in plain English |
 | Random praise, confetti and sounds for wins; "So close!" and a whiteboard walkthrough for misses | The session story, a skill path table and a skill-growth chart by grade band |
-| "Skip this one" (steps difficulty down) and hints | Settings: default mode, questions, sound, redo check-in, export data |
+| "Skip this one" (steps difficulty down) and hints | Settings: default mode, questions, redo check-in, export data |
 | Level and XP that only go up; rolling day streak; a positive story after each session | |
 | 10 buddy looks × 8 colors; add, edit and remove players | |
 
