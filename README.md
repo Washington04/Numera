@@ -4,6 +4,7 @@ Adaptive K-5 math practice. A short check-in finds each player's starting point,
 
 - **ARCHITECTURE.md** explains how the engine works: feedback loops, formulas, data model, tuning.
 - **FEEDBACK.md** is the running product feedback log and direction.
+- **PRIVACY.md** explains what's stored and where (short answer: nothing leaves your device).
 
 ## Run it
 
@@ -13,7 +14,7 @@ Adaptive K-5 math practice. A short check-in finds each player's starting point,
 
 **Installable on your network (optional):** in this folder run `python3 -m http.server 8080`, then open `http://localhost:8080`. Over http it works offline and can be added to a phone or iPad home screen.
 
-No install, no accounts, nothing leaves the device. Fonts load from Google Fonts when online; offline it falls back to system rounded fonts.
+No install, no accounts, nothing leaves the device — see [PRIVACY.md](PRIVACY.md). Fonts are bundled with the app (see `fonts/`), so Numera makes no third-party requests, online or off.
 
 After editing source files, run `node build.mjs` to rebuild `dist/Numera.html`, and `node tests/run.mjs` to check the engine.
 
@@ -62,6 +63,8 @@ js/app.js             screens and interaction
 tests/run.mjs         tests: node tests/run.mjs
 build.mjs             builds dist/Numera.html: node build.mjs
 manifest.webmanifest, sw.js, icons/   installable web app pieces
+fonts/                bundled M PLUS Rounded 1c and Patrick Hand (latin subset), no third-party requests
+PRIVACY.md            what's stored and where
 ```
 
 ## Path to the App Store and Google Play
@@ -69,8 +72,8 @@ manifest.webmanifest, sw.js, icons/   installable web app pieces
 1. **Share now as a web app.** Put this folder on any static host (GitHub Pages, Netlify, Cloudflare Pages). Families open the link and use "Add to Home Screen".
 2. **Wrap it with Capacitor** for native builds. The app is plain HTML/JS, so it drops in as the web directory: `npm init @capacitor/app`, copy these files into `www/`, then `npx cap add ios` and `npx cap add android`. You need a paid Apple Developer account and a Google Play developer account.
 3. **Before a Kids-category submission:**
-   - Bundle the two fonts (M PLUS Rounded 1c and Patrick Hand, both open-licensed) so the app makes no third-party requests.
+   - ~~Bundle the two fonts (M PLUS Rounded 1c and Patrick Hand, both open-licensed) so the app makes no third-party requests.~~ Done — see `fonts/`.
    - Swap `js/store.js` for Capacitor Preferences or SQLite.
    - Add a parental gate in front of Grown-ups and Remove.
-   - Write a privacy policy. Nothing is collected off-device today.
+   - ~~Write a privacy policy. Nothing is collected off-device today.~~ Done — see [PRIVACY.md](PRIVACY.md).
 4. **Sync across devices later:** each player is one JSON object (see "Export data").

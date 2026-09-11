@@ -77,7 +77,8 @@
   function brand() {
     return h('button', { class: 'brand', onclick: () => { A.pid = null; go('profiles'); }, 'aria-label': 'Numera home' },
       h('span', { class: 'brand-mark', 'aria-hidden': 'true' }, raw(FX.pip({ color: '#4DABF7', mood: 'idle', size: 34 }))),
-      h('span', null, 'Num', h('b', null, 'era')));
+      h('span', null, 'Num', h('b', null, 'era')),
+      h('span', { class: 'beta-tag' }, 'Beta'));
   }
   function soundBtn() {
     return h('button', { class: 'iconbtn', 'aria-label': FX.Sound.on ? 'Turn sound off' : 'Turn sound on', title: 'Sound', onclick: () => { FX.Sound.on = !FX.Sound.on; A.data.settings.sound = FX.Sound.on; save(); render(); if (FX.Sound.on) FX.play('tap'); } }, FX.Sound.on ? '🔊' : '🔇');
@@ -133,7 +134,7 @@
     const ps = A.data.profiles;
     return h('div', { class: 'wrap stack' },
       topbar(soundBtn()),
-      h('div', { class: 'hero-title' }, h('h1', null, 'Choose your profile'), h('p', { class: 'muted' }, 'Each player keeps their own level, path and progress on this device.')),
+      h('div', { class: 'hero-title' }, h('h1', null, 'Choose your profile'), h('p', { class: 'muted' }, 'Each player keeps their own level, path and progress on this device.'), h('p', { class: 'muted small' }, '🔒 No accounts, no uploads. Nothing here ever leaves this device.')),
       h('div', { class: 'players' },
         ps.map((p) => {
           const L = E.levelInfo(p.xp), last = p.sessions[p.sessions.length - 1];
@@ -164,7 +165,7 @@
     const editing = f.editId ? A.data.profiles.find((x) => x.id === f.editId) : null;
     const big = () => raw(FX.pip({ color: f.color, look: f.look, mood: f.name.trim() ? 'cheer' : 'idle', size: 150, cls: 'bob' }));
     const preview = h('div', { class: 'preview' }, big());
-    const nameInput = h('input', { type: 'text', id: 'player-name', maxlength: '20', value: f.name, placeholder: 'First name', autocomplete: 'off', oninput: (e) => {
+    const nameInput = h('input', { type: 'text', id: 'player-name', maxlength: '20', value: f.name, placeholder: 'First name or nickname', autocomplete: 'off', oninput: (e) => {
       const had = !!f.name.trim(); f.name = e.target.value; saveBtn.disabled = !f.name.trim();
       if (had !== !!f.name.trim()) preview.replaceChildren(big());
     } });
@@ -184,7 +185,8 @@
         preview,
         h('div', { class: 'stack' },
           h('h1', null, editing ? 'Edit player' : 'New player'),
-          h('div', { class: 'field' }, h('label', { class: 'label', for: 'player-name' }, 'Name'), nameInput),
+          h('div', { class: 'field' }, h('label', { class: 'label', for: 'player-name' }, 'Name'), nameInput,
+            h('p', { class: 'note' }, '🔒 A first name or nickname is all we need — it stays on this device and is never uploaded anywhere.')),
           h('div', { class: 'field' },
             h('span', { class: 'label' }, 'Pick your buddy'),
             h('div', { class: 'looks', role: 'radiogroup', 'aria-label': 'Buddy' },

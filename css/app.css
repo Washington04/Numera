@@ -1,6 +1,13 @@
 /* Numera visual system: soft studio light (Pixar), frosted glass and
    clean type (Apple), sparkle bursts and expressive Pip (anime).
    The whiteboard is a real-world dry-erase board, white in both themes. */
+/* Fonts are bundled in ../fonts (latin subset only) so the app makes no
+   third-party requests. build.mjs inlines these as data URIs for dist. */
+@font-face { font-family: 'M PLUS Rounded 1c'; font-style: normal; font-weight: 500; font-display: swap; src: url(../fonts/mplus-rounded-1c-500.woff2) format('woff2'); }
+@font-face { font-family: 'M PLUS Rounded 1c'; font-style: normal; font-weight: 700; font-display: swap; src: url(../fonts/mplus-rounded-1c-700.woff2) format('woff2'); }
+@font-face { font-family: 'M PLUS Rounded 1c'; font-style: normal; font-weight: 800; font-display: swap; src: url(../fonts/mplus-rounded-1c-800.woff2) format('woff2'); }
+@font-face { font-family: 'M PLUS Rounded 1c'; font-style: normal; font-weight: 900; font-display: swap; src: url(../fonts/mplus-rounded-1c-900.woff2) format('woff2'); }
+@font-face { font-family: 'Patrick Hand'; font-style: normal; font-weight: 400; font-display: swap; src: url(../fonts/patrick-hand-400.woff2) format('woff2'); }
 :root {
   --bg-base: #F6F3FF; --bg1: #FFE7D6; --bg2: #E9E3FF; --bg3: #DDF1FF;
   --glass: rgba(255, 255, 255, .74); --glass-2: rgba(255, 255, 255, .55); --glass-border: rgba(255, 255, 255, .95); --card-solid: #FFFFFF;
@@ -92,6 +99,7 @@ p { margin: 0; }
 .brand { display: flex; align-items: center; gap: 8px; font-weight: 900; font-size: 24px; letter-spacing: -0.03em; background: none; border: 0; padding: 0; }
 .brand b { font-weight: 900; background: linear-gradient(90deg, var(--p1), var(--p2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .brand-mark { display: inline-flex; }
+.beta-tag { display: inline-flex; align-items: center; font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--glass-2); color: var(--ink-2); border: 1px solid var(--line); }
 .iconbtn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--glass-border); background: var(--glass); box-shadow: var(--shadow); font-size: 18px; display: grid; place-items: center; flex: none; }
 
 /* Buttons */

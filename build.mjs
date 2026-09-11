@@ -3,7 +3,9 @@
 import fs from 'node:fs';
 const read = (f) => fs.readFileSync(new URL(f, import.meta.url), 'utf8');
 let html = read('./index.html');
-html = html.replace('<link rel="stylesheet" href="css/app.css">', () => `<style>\n${read('./css/app.css')}\n</style>`);
+const appCss = read('./css/app.css').replace(/url\(\.\.\/fonts\/([\w.-]+\.woff2)\)/g, (_, f) =>
+  `url(data:font/woff2;base64,${fs.readFileSync(new URL('./fonts/' + f, import.meta.url)).toString('base64')})`);
+html = html.replace('<link rel="stylesheet" href="css/app.css">', () => `<style>\n${appCss}\n</style>`);
 html = html.replace(/<script src="(js\/[\w.]+)"><\/script>/g, (_, f) => `<script>\n${read('./' + f).replace(/<\/script/gi, '<\\/script')}\n</script>`);
 html = html.replace(/<link rel="manifest"[^>]*>\n/, '').replace(/<link rel="(apple-touch-)?icon"[^>]*>\n/g, '');
 const icon = 'data:image/svg+xml,' + encodeURIComponent(read('./icons/icon.svg').trim());

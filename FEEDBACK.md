@@ -43,6 +43,13 @@ Status: **Done** shipped · **Open** not started or needs discussion
 | 28 | Rename the profile screen title from "Who's playing today?" to "Choose your profile". | Done | Title changed. |
 | 29 | Rename the app to Numera. | Done | Renamed everywhere: title, wordmark, installable app name, single-file build (dist/Numera.html), docs. Saved progress carries over from the old name automatically. |
 
+## 2026-09-11 · Round 3 (after build 2)
+
+| # | Feedback | Status | What changed |
+|---|---|---|---|
+| 30 | Bundle the two Google Fonts into the repo so the app makes no third-party requests; add a privacy note to the profile screen and the add-player screen; write a privacy policy and link it from the README. | Done | M PLUS Rounded 1c and Patrick Hand (latin subset) now ship in `fonts/` and load with `@font-face`; `build.mjs` inlines them as data URIs so `dist/Numera.html` stays a single portable file. Added a short reassurance line to "Choose your profile" and to the add-player form (whose name field now reads "First name or nickname"). Added PRIVACY.md and linked it from README.md, including checking off the two related items in the App Store checklist. |
+| 31 | Add a Beta tag next to the logo. | Done | Small "Beta" pill next to the Numera wordmark in the top bar, visible on every screen. |
+
 ## Direction
 
 Themes so far, strongest first:
